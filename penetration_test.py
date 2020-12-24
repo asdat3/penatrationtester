@@ -61,3 +61,54 @@ write_log(log_print_text=f'{tag} - {date_i_want_now}Started')
 write_log(log_print_text=f'URL: {url_t_request}')
 write_log(log_print_text=f'DELAY: {time_in_s_delay}')
 
+#  MAIN
+start_total = timer()
+while banned == False:
+    try:
+        tmain_counter = tmain_counter + 1
+
+        date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
+        print(Fore.BLUE + f'{date_i_want_now}requesting... {str(tmain_counter)}')
+        write_log(log_print_text=f'{date_i_want_now}requesting... {str(tmain_counter)}')
+
+        start = timer()
+
+        #scraper = cloudscraper.create_scraper()
+        #r = scraper.get(url_t_request)
+        r = requests.get(url_t_request, proxies=proxies())
+
+        end = timer()
+        print(Fore.WHITE + f'{str(end - start)} - request done... {str(tmain_counter)}')
+        write_log(log_print_text=f'{str(end - start)} - request done... {str(tmain_counter)}')
+
+        if "unauthorized" in r.text or "Unauthorized" in r.text or "refused" in r.text or "Refused" in r.text or "REFUSED" in r.text or "rate limit" in r.text or "Rate Limit" in r.text or "rate Limit" in r.text:
+            banned = True
+        if "Jordan" in r.text or "Nike" in r.text or "Apple iPhone" in r.text or "PlayStation" in r.text:
+            banned = False
+        else:
+            banned = True
+
+        if banned == True:
+
+            bsdosefofseiusfefs = str(r.text)
+            with open("quick_safe.html","w") as f:
+                f.write(str(bsdosefofseiusfefs.encode("utf-8")))
+
+            print(Fore.RED + f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
+            write_log(log_print_text=f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
+        else:
+            print(Fore.GREEN + f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
+            write_log(log_print_text=f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
+
+        time.sleep(time_in_s_delay)
+    except:
+        print("ERORRRR")
+
+#  end print
+date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
+print(Fore.GREEN + "See you :)")
+write_log(log_print_text=f'{date_i_want_now}Program closed')
+
+print("\n\n")
+wait_for_space_eh_enter_to_close_the_script_sdiuwefuhewfhuew = input("press 'enter' to close the program    ")
+
