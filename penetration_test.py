@@ -24,3 +24,40 @@ with open(f'request_ban_penetration_log/{log_file_name}',"w") as f:
 def write_log(log_print_text):
     with open(f'request_ban_penetration_log/{log_file_name}',"a") as f:
         f.write(log_print_text + "\n")
+
+def proxies():
+    with open('proxies.txt','r') as proxyIn:
+        proxyInput = proxyIn.read().splitlines()
+
+    proxyList = [i for i in proxyInput]
+    p = random.choice(proxyList)
+    p = p.split(':')
+    try:
+        proxies = {
+            'http':f'http://{p[2]}:{p[3]}@{p[0]}:{p[1]}',
+            'https':f'https://{p[2]}:{p[3]}@{p[0]}:{p[1]}'
+        }
+    except:
+        proxies = {
+            'http':f'http://{p[0]}:{p[1]}',
+            'https':f'https://{p[0]}:{p[1]}'
+        }
+    return proxies
+
+#  input settings
+
+print(Fore.RED + "AsdatIndustries Penetration Test")
+print(Fore.WHITE + "")
+url_t_request = input("URL: ")
+time_in_s_delay = int(input("DELAY (s): "))
+
+#  starting and logging
+
+date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
+tag = str(datetime.datetime.now().strftime("%d-%m-%Y"))
+
+print(Fore.GREEN + f'{tag} - {date_i_want_now}Started')
+write_log(log_print_text=f'{tag} - {date_i_want_now}Started')
+write_log(log_print_text=f'URL: {url_t_request}')
+write_log(log_print_text=f'DELAY: {time_in_s_delay}')
+
