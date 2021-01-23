@@ -64,45 +64,42 @@ write_log(log_print_text=f'DELAY: {time_in_s_delay}')
 #  MAIN
 start_total = timer()
 while banned == False:
-    try:
-        tmain_counter = tmain_counter + 1
+    tmain_counter = tmain_counter + 1
 
-        date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
-        print(Fore.BLUE + f'{date_i_want_now}requesting... {str(tmain_counter)}')
-        write_log(log_print_text=f'{date_i_want_now}requesting... {str(tmain_counter)}')
+    date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
+    print(Fore.BLUE + f'{date_i_want_now}requesting... {str(tmain_counter)}')
+    write_log(log_print_text=f'{date_i_want_now}requesting... {str(tmain_counter)}')
 
-        start = timer()
+    start = timer()
 
-        #scraper = cloudscraper.create_scraper()
-        #r = scraper.get(url_t_request)
-        r = requests.get(url_t_request, proxies=proxies())
+    #scraper = cloudscraper.create_scraper()
+    #r = scraper.get(url_t_request)
+    r = requests.get(url_t_request)
 
-        end = timer()
-        print(Fore.WHITE + f'{str(end - start)} - request done... {str(tmain_counter)}')
-        write_log(log_print_text=f'{str(end - start)} - request done... {str(tmain_counter)}')
+    end = timer()
+    print(Fore.WHITE + f'{str(end - start)} - request done... {str(tmain_counter)}')
+    write_log(log_print_text=f'{str(end - start)} - request done... {str(tmain_counter)}')
 
-        if "unauthorized" in r.text or "Unauthorized" in r.text or "refused" in r.text or "Refused" in r.text or "REFUSED" in r.text or "rate limit" in r.text or "Rate Limit" in r.text or "rate Limit" in r.text:
-            banned = True
-        if "Jordan" in r.text or "Nike" in r.text or "Apple iPhone" in r.text or "PlayStation" in r.text:
-            banned = False
-        else:
-            banned = True
+    if "unauthorized" in r.text or "Unauthorized" in r.text or "refused" in r.text or "Refused" in r.text or "REFUSED" in r.text or "rate limit" in r.text or "Rate Limit" in r.text or "rate Limit" in r.text:
+        banned = True
+    if "Jordan" in r.text or "Nike" in r.text or "Apple iPhone" in r.text or "PlayStation" in r.text:
+        banned = False
+    else:
+        banned = True
 
-        if banned == True:
+    if banned == True:
 
-            bsdosefofseiusfefs = str(r.text)
-            with open("quick_safe.html","w") as f:
-                f.write(str(bsdosefofseiusfefs.encode("utf-8")))
+        bsdosefofseiusfefs = str(r.text)
+        with open("quick_safe.html","w") as f:
+            f.write(str(bsdosefofseiusfefs.encode("utf-8")))
 
-            print(Fore.RED + f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
-            write_log(log_print_text=f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
-        else:
-            print(Fore.GREEN + f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
-            write_log(log_print_text=f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
+        print(Fore.RED + f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
+        write_log(log_print_text=f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
+    else:
+        print(Fore.GREEN + f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
+        write_log(log_print_text=f'{str(end - start_total)} - NOT BANNED {str(tmain_counter)}')
 
-        time.sleep(time_in_s_delay)
-    except:
-        print("ERORRRR")
+    time.sleep(time_in_s_delay)
 
 #  end print
 date_i_want_now = f'{datetime.datetime.now().strftime("%H")}:{datetime.datetime.now().strftime("%M")} - '
