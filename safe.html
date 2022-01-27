@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+        <title>Attempting to add to wishlist...</title>
+</head>
+
+<body onload="main()">
+    <h1 id="atc_status">Please wait...</h1>
+
+    <form id="product_form" class="clearfix" method="post" action="">
+        <input type="hidden" name="pid" id="PID" value=""/>
+    </form>
+    
+    <form id="redirect_form" method="get" action="" >
+    </form>
+
+<script>
+    function getUrls() {
+
+        var i1 = [];
+        var hash;
+        var allVars = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+        for(var i = 0; i < allVars.length; i++) {
+            hash = allVars[i].split('=');
+            i1.push(hash[0]);
+            i1[hash[0]] = hash[1];
+        }
+
+        return i1;
+    }
+
+    function getCookie(name) {
+        var dc = document.cookie;
+        var prefix = name + "=";
+        var begin = dc.indexOf("; " + prefix);
+        if (begin == -1) {
+            begin = dc.indexOf(prefix);
+            if (begin != 0) return null;
+        }
+        else
+        {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end == -1) {
+            end = dc.length;
+            }
+        }
+        return decodeURI(dc.substring(begin + prefix.length, end));
+    } 
+
+    function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); };
+
+    async function main() {
+        var regionCookie = getCookie("en_snse");
+        if (regionCookie == null) {
+            var redirectURL = "https://www.snipes.com/wishlist";
+            var atcURL = "https://www.snipes.com/on/demandware.store/Sites-snse-DE-AT-Site/de_DE/Wishlist-AddProduct?format=ajax";
+        } else {
+            var split = regionCookie.split('|')
+            var redirectURL = "https://www.snipes." + split[0] + "/wishlist";
+            var atcURL = "https://www.snipes." + split[0] + "/on/demandware.store/" + split[1] + "/Wishlist-AddProduct?format=ajax";
+        }
+
+        document.getElementById('PID').value = getUrls()['PID'];
+        document.getElementById('product_form').action = atcURL;
+        document.getElementById("product_form").submit();
+        document.getElementById('atc_status').innerHTML = "Redirecting...";
+        await sleep(600);
+        document.getElementById('redirect_form').action = redirectURL;
+        document.getElementById('redirect_form').submit();
+    }
+    
+</script>
+
+</body>
+</html>
