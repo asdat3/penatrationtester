@@ -87,12 +87,11 @@ while banned == False:
     else:
         banned = True
 
+    bsdosefofseiusfefs = str(r.text)
+    with open("quick_safe.html","w") as f:
+        f.write(str(bsdosefofseiusfefs.encode("utf-8")))
+
     if banned == True:
-
-        bsdosefofseiusfefs = str(r.text)
-        with open("quick_safe.html","w") as f:
-            f.write(str(bsdosefofseiusfefs.encode("utf-8")))
-
         print(Fore.RED + f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
         write_log(log_print_text=f'{str(end - start_total)} - BANNED {str(tmain_counter)}')
     else:
